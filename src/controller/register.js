@@ -6,9 +6,8 @@ const register = async (request, response) => {
   // })
 
   // try {
-  console.log(request.body);
-  return false;
-  const { name, email, password } = request.body;
+    console.log(request.body);
+  const { first_name, last_name, email, phone_number } = request.body;
   const existingUser = await User.findOne({ email });
 
   if (existingUser) {
@@ -18,7 +17,7 @@ const register = async (request, response) => {
   }
 
   // Create a new user object
-  const newUser = new User({ name, email, password });
+  const newUser = new User({ first_name, last_name, email, phone_number });
 
   // Save the new user to the database
   const savedUser = await newUser.save();

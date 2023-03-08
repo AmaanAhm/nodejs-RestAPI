@@ -22,9 +22,7 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
-        minlength: 8,
-        match: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
     },
-});
+}, {timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }});
 
 module.exports = userSchema;

@@ -14,6 +14,7 @@ async function seed() {
       last_name: faker.name.lastName(),
       email: faker.internet.email(),
       phone_number: faker.phone.number('##########'),
+      password: 'Qwerty@123'
     });
     await user.save();
   }

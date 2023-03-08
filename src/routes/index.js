@@ -9,4 +9,5 @@ const roleRoute = require('./roleRoute');
 router.use('/api', registerRoutes);
 router.use('/api', roleRoute)
 
+
 module.exports = router;

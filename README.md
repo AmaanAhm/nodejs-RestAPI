@@ -1,6 +1,6 @@
 # Project Name
 
-This project is a [brief description of the project].
+This project is about nodejs Api.
 
 ## Getting Started
 
@@ -8,14 +8,17 @@ To get started with this project, follow the instructions below.
 
 ### Prerequisites
 
-To run this project, you need to have Node.js and NPM (Node Package Manager) installed on your system. You can download and install them from the official Node.js website: https://nodejs.org/en/.
+To run this project, you need to have Node.js and Yarn installed on your system. You can download and install them from the official websites: 
+
+- Node.js: https://nodejs.org/en/
+- Yarn: https://yarnpkg.com/lang/en/docs/install/
 
 ### Installation
 
 1. Clone the repository: `git clone [repository URL]`
 2. Navigate to the project directory: `cd project`
-3. Install the dependencies: `npm install`
-4. Start the server: `npm start`
+3. Install the dependencies: `yarn install`
+4. Start the server: `yarn start`
 
 ### Usage
 
@@ -26,7 +29,7 @@ To use this project, follow the instructions below.
 
 ### Scripts
 
-This project includes the following NPM scripts:
+This project includes the following Yarn scripts:
 
 - `start`: Start the server using nodemon.
 - `seeder`: Seed the database with sample data.

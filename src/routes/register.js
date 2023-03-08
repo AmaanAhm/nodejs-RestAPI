@@ -3,8 +3,6 @@ const router = express.Router();
 const registerController = require('../controller/register');
 
 
-
-
 // Define register route
 router.post('/register', registerController.register);
 

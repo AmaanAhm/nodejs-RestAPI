@@ -23,5 +23,5 @@ app.use((err, req, res, next) => {
   });
 
 app.listen(3000, (request, response) => {
-    console.log("port 5000")
+    console.log("port 3000")
 })

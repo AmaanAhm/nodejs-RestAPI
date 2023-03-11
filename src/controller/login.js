@@ -27,8 +27,8 @@ const login = async (req, res) => {
         }
 
         // Generate JWT token
-        const token =  jwt.sign({ userId: user._id }, SECRET_KEY, {
-          expiresIn: '1h'
+        const token = jwt.sign({ userId: user._id }, SECRET_KEY, {
+            expiresIn: '1h',
         });
         res.status(200).json({
             message: 'User logged in successfully',
@@ -59,21 +59,21 @@ const login = async (req, res) => {
 //   }
 // };
 
-const verifyToken = (req, res, next) => {
+const verifyToken = (req, res) => {
     const authHeader = req.headers.authorization;
 
     if (authHeader) {
         const token = authHeader.split(' ')[1];
-
         jwt.verify(token, SECRET_KEY, (err, decoded) => {
             if (err) {
+                // If an error occurs during verification, it will be passed as the first argument to the callback
                 return res.status(403).json({ message: 'Failed to authenticate token' });
+                // You may want to return an error response to the client here
+            } else {
+                // If the token is valid, the decoded payload will be passed as the second argument to the callback
+                return res.status(200).json({ message: { decoded } });
+                // You can now use the decoded payload as needed
             }
-
-            req.userId = decoded.userId;
-            console.log(req.userId);
-            console.log(decoded.userId);
-            next();
         });
     } else {
         return res.status(401).json({ message: 'Token not provided' });

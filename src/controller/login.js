@@ -27,9 +27,7 @@ const login = async (req, res) => {
         }
 
         // Generate JWT token
-        const token = jwt.sign({ userId: user._id }, SECRET_KEY, {
-            expiresIn: '1h',
-        });
+        const token =  jwt.sign({ userId: user._id }, SECRET_KEY);
         res.status(200).json({
             message: 'User logged in successfully',
             user,
@@ -41,23 +39,6 @@ const login = async (req, res) => {
     }
 };
 
-// const verifyToken = (req, res, next) => {
-//   const authHeader = req.headers['authorization'];
-//   const token = authHeader && authHeader.split(' ')[1];
-
-//   if (!token) {
-//       return res.status(403).json({ message: 'Token not provided' });
-//   }
-
-//   try {
-//       const decoded = jwt.verify(token, SECRET_KEY);
-//       console.log(decoded);
-//       req.userId = decoded.userId;
-//       next();
-//   } catch (err) {
-//       return res.status(401).json({ message: 'Failed to authenticate token' });
-//   }
-// };
 
 const verifyToken = (req, res) => {
     const authHeader = req.headers.authorization;
@@ -66,18 +47,48 @@ const verifyToken = (req, res) => {
         const token = authHeader.split(' ')[1];
         jwt.verify(token, SECRET_KEY, (err, decoded) => {
             if (err) {
-                // If an error occurs during verification, it will be passed as the first argument to the callback
-                return res.status(403).json({ message: 'Failed to authenticate token' });
-                // You may want to return an error response to the client here
+                
+              return res.status(403).json({ message: 'Failed to authenticate token' });
             } else {
-                // If the token is valid, the decoded payload will be passed as the second argument to the callback
-                return res.status(200).json({ message: { decoded } });
-                // You can now use the decoded payload as needed
+                res.status(200).json({ message: decoded });
+              
             }
-        });
+          });
     } else {
         return res.status(401).json({ message: 'Token not provided' });
     }
 };
 
-module.exports = { login, verifyToken };
+// Refresh Token
+const generateAccessToken = (userId) => {
+  return jwt.sign({ userId }, SECRET_KEY, { expiresIn: '15m' });
+}
+
+// Route handler for refreshing an access token using a refresh token
+const refreshToken = async (req, res) => {
+  // Get the refresh token from the request
+  let refreshToken = req.body.token || req.query.token || req.headers['x-access-token'];
+  console.log(refreshToken);
+  if (!refreshToken) {
+    return res.status(401).json({ message: 'Refresh token not provided' });
+  }
+
+  // Verify the refresh token
+  jwt.verify(refreshToken, SECRET_KEY, (err, decoded) => {
+    if (err) {
+      return res.status(403).json({ message: 'Failed to authenticate refresh token' });
+    }
+
+    // Generate a new access token with a new expiration time
+    const accessToken = generateAccessToken(decoded.userId);
+
+    // Return the new access token
+    res.status(200).json({ accessToken });
+  });
+}
+  
+
+module.exports = { login, verifyToken, refreshToken };
+
+
+

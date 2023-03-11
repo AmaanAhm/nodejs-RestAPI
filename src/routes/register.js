@@ -13,6 +13,8 @@ const registerValidator = require('../validator/registerValidator');
     }
     registerController.register(req, res, next);
   });
+
+  router.put('/updateUser/:id',registerController.updateUser);
   
   module.exports = router;
   

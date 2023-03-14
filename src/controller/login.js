@@ -50,8 +50,10 @@ const verifyToken = (req, res) => {
                 
               return res.status(403).json({ message: 'Failed to authenticate token' });
             } else {
+        
                 res.status(200).json({ message: decoded });
-              
+                
+                
             }
           });
     } else {
@@ -59,9 +61,11 @@ const verifyToken = (req, res) => {
     }
 };
 
+
+
 // Refresh Token
 const generateAccessToken = (userId) => {
-  return jwt.sign({ userId }, SECRET_KEY, { expiresIn: '15m' });
+  return jwt.sign({ userId }, SECRET_KEY, { expiresIn: '1d' });
 }
 
 // Route handler for refreshing an access token using a refresh token

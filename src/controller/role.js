@@ -25,20 +25,14 @@ const createRole = async (req, res) => {
 
 
 const getRoles = async (req, res) => {
-    const authHeader = req.headers.authorization;
-    if (authHeader) {
-      const token = authHeader.split(' ')[1];
       try {
-        const decoded = jwt.verify(token, SECRET_KEY);
         const roles = await Role.find({});
         res.status(200).json({ roles });
       } catch (err) {
         res.status(403).json({ message: 'Failed to authenticate token' });
       }
-    } else {
-      res.status(401).json({ message: 'Token not provided' });
-    }
   };
+
 
 // const update = async (_id) => {
 //     try {
@@ -55,6 +49,7 @@ const getRoles = async (req, res) => {
 // update("6407931f7f33b8d6f15879b7")
 
 //update by id
+
 const update = async (req, res) => {
     const id = req.params.id;
     const titleUpdate = req.body;

@@ -53,7 +53,6 @@ const verifyToken = (req, res) => {
         
                 res.status(200).json({ message: decoded });
                 
-                
             }
           });
     } else {

@@ -1,4 +1,6 @@
 const Role = require('../models/roleModel');
+const jwt = require('jsonwebtoken');
+const SECRET_KEY = 'my-secret-key';
 
 const createRole = async (req, res) => {
     try {
@@ -12,22 +14,31 @@ const createRole = async (req, res) => {
         const role = new Role({ title });
         const savedRole = await role.save();
 
-        res.status(201).json({ message: 'Role created', role: savedRole });
+        const token = jwt.sign({ userId: title._id }, SECRET_KEY);
+
+        res.status(201).json({ message: 'Role created', role: savedRole, token });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
     }
 };
 
+
 const getRoles = async (req, res) => {
-    try {
+    const authHeader = req.headers.authorization;
+    if (authHeader) {
+      const token = authHeader.split(' ')[1];
+      try {
+        const decoded = jwt.verify(token, SECRET_KEY);
         const roles = await Role.find({});
         res.status(200).json({ roles });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Internal server error' });
+      } catch (err) {
+        res.status(403).json({ message: 'Failed to authenticate token' });
+      }
+    } else {
+      res.status(401).json({ message: 'Token not provided' });
     }
-};
+  };
 
 // const update = async (_id) => {
 //     try {
@@ -57,25 +68,23 @@ const update = async (req, res) => {
     }
 };
 
-
-// Role deleted 
- const deleteRole = async (req, res, next) => {
+// Role deleted
+const deleteRole = async (req, res, next) => {
     try {
-      const id = req.params.id;
-      const deletedRole = await Role.findByIdAndDelete(id);
-      if (!deletedRole) {
-          const error = new Error('Role not found');
-          error.statusCode = 404;
-        throw error;
+        const id = req.params.id;
+        const deletedRole = await Role.findByIdAndDelete(id);
+        if (!deletedRole) {
+            const error = new Error('Role not found');
+            error.statusCode = 404;
+            throw error;
+        }
+        res.status(200).json({ message: 'Role deleted', role: deletedRole });
+    } catch (err) {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
     }
-    res.status(200).json({ message: 'Role deleted', role: deletedRole });
-} catch (err) {
-    if (!err.statusCode) {
-        err.statusCode = 500;
-    }
-    next(err);
-}
 };
 
-
-module.exports = { createRole, getRoles, update, deleteRole  };
+module.exports = { createRole, getRoles, update, deleteRole };

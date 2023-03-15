@@ -1,4 +1,6 @@
 const Permission = require('../models/permissionModel');
+const jwt = require('jsonwebtoken');
+const SECRET_KEY = 'my-secret-key';
 
 const createPermission = async (request, response) => {
     try {
@@ -8,11 +10,11 @@ const createPermission = async (request, response) => {
         if (existingTitle) {
             return response.Status(409).json({ message: 'Permission title is already exists' });
         }
-
         const permission = new Permission({ title });
         const savedPermission = await permission.save();
 
-        response.status(201).json({ message: 'permission title created', permission: savedPermission });
+        const token = jwt.sign({ userId: title._id }, SECRET_KEY);
+        response.status(201).json({ message: 'User Logged in successfully',token, permission: savedPermission });
     } catch (error) {
         response.status(500).json({ message: 'Internal server error' });
     }
@@ -46,11 +48,11 @@ const deletePermission = async (req, res) => {
         const id = req.params.id;
         const deletedRole = await Permission.findByIdAndDelete(id);
         if (!deletedRole) {
-            const error = new Error('Role not found');
+            const error = new Error('permission not found');
             error.statusCode = 404;
             throw error;
         }
-        res.status(200).json({ message: 'Role deleted', role: deletedRole });
+        res.status(200).json({ message: 'permission deleted', role: deletedRole });
     } catch (err) {
         if (!err.statusCode) {
             err.statusCode = 500;

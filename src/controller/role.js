@@ -14,9 +14,7 @@ const createRole = async (req, res) => {
         const role = new Role({ title });
         const savedRole = await role.save();
 
-        const token = jwt.sign({ userId: title._id }, SECRET_KEY);
-
-        res.status(201).json({ message: 'Role created', role: savedRole, token });
+        res.status(201).json({ message: 'Role created', role: savedRole});
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });

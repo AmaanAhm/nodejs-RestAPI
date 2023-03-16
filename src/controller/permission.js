@@ -1,6 +1,5 @@
 const Permission = require('../models/permissionModel');
-const jwt = require('jsonwebtoken');
-const SECRET_KEY = 'my-secret-key';
+
 
 const createPermission = async (request, response) => {
     try {
@@ -13,8 +12,7 @@ const createPermission = async (request, response) => {
         const permission = new Permission({ title });
         const savedPermission = await permission.save();
 
-        const token = jwt.sign({ userId: title._id }, SECRET_KEY);
-        response.status(201).json({ message: 'User Logged in successfully',token, permission: savedPermission });
+        response.status(201).json({ message: 'Permission created successfully', permission: savedPermission });
     } catch (error) {
         response.status(500).json({ message: 'Internal server error' });
     }

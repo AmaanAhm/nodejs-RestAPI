@@ -15,6 +15,6 @@ const registerValidator = require('../validator/registerValidator');
   });
 
   router.put('/updateUser/:id',registerController.updateUser);
-  
+  router.put('/editRole_id/:id', registerController.editRole_id);  
   module.exports = router;
   

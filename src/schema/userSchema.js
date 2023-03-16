@@ -23,7 +23,11 @@ const userSchema = new mongoose.Schema(
         password: {
             type: String,
             required: true,
-        },
+        }, 
+        role_id: {
+            type: String,
+            required: true, 
+        }
     },
     {
         timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },

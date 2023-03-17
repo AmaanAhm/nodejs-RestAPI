@@ -7,7 +7,7 @@ const { validationResult } = require('express-validator');
 
 router.get('/role', auth, roleController.getRoles);
 
-router.post('/role', roleValidator(), (req, res, next) => {
+router.post('/role', roleValidator(), auth, (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(200).json({ errors: errors.array() });
@@ -15,7 +15,7 @@ router.post('/role', roleValidator(), (req, res, next) => {
     roleController.createRole(req, res, next);
 });
 
-router.put('/role/:id', roleController.update);
-router.delete('/role/:id', roleController.deleteRole);
+router.put('/role/:id', auth, roleController.update);
+router.delete('/role/:id', auth,roleController.deleteRole);
 
 module.exports = router;

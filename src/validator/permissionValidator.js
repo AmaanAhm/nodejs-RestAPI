@@ -1,7 +1,7 @@
 const { body } = require('express-validator');
-const Permission = require('../schema/permissionSchema');
+const Permission = require('../models/permissionModel');
 
-const isTitleAlreadyRegistered = async (req, res) => {
+const isTitleAlreadyRegistered = async (title) => {
     const user = await Permission.findOne({ title });
     if (user) {
         return Promise.reject('Email is already registered');

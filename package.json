@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon index.js",
     "seeder": "node src/seeder/index.js",
-    "lint": "eslint --fix src/**/*.js"
+    "lint": "eslint --fix src/**/*.js",
+    "swagger": "swagger-jsdoc -d swagger-def.js src/routes/*.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",

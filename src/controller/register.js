@@ -46,4 +46,4 @@ const updateUser = async (request, response) => {
     }
 };
 
-module.exports = { register, updateUser, editRole_id };
+module.exports = { register, updateUser };

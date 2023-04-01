@@ -1,17 +1,16 @@
-const User = require('../models/userModel');
 const { body } = require('express-validator');
-// const Role = require('../models/roleModel');
+const User = require('../models/UserModel');
 
-const isUserRoleIdExisted = async (role) => {
-    const check = await User.findOne({ role });
-    console.log(check);
+const isUserExist = async (user_id) => {
+    const check = await User.findOne({ user_id });
     if (check) {
-        return Promise.reject('Role_id is already registered');
+        return Promise.reject('User doesnot exist');
     }
 };
-// this print this promise when "":"isalreadyExisted". problem
+
+
 const userValidator = () => {
-    return [body('role').notEmpty().withMessage('role_id required').custom(isUserRoleIdExisted)];
+    return [body('user_id').notEmpty().withMessage('role_id required').custom(isUserExist)];
 };
 
 module.exports = userValidator;

@@ -1,22 +1,21 @@
-const User = require('../models/UserModel');
+const User = require('../models/userModel');
+const Role = require('../models/roleModel');
 
 const updateRoleId = async (req, res) => {
     try {
-        const userId = req.params.id;
-        const { role_id } = req.body;
-        const user = await User.findById(userId);
-
-        if (!user) {
-            return response.status(404).json({ message: 'User not found' });
-        }
-        user.role_id = role_id;
-        const editRole_id = await user.save();
+        const roleId = req.params.id;
+        const { user_id } = req.body;
+        const role = await Role.findById(roleId);
+        const user = await User.findById(user_id);
+        user.role = role;
+        // user.roles = role;
+        const result = await user.save();
         res.status(200).json({
-            user: editRole_id,
+            user: result,
         });
     } catch (error) {
         console.error(error);
-        response.status(500).json({ message: 'Internal server error' });
+        res.status(500).json({ message: 'Internal server error' });
     }
 };
 

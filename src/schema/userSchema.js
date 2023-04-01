@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const roleSchema = require('./roleSchema');
 
 const userSchema = new mongoose.Schema(
     {
@@ -27,9 +28,16 @@ const userSchema = new mongoose.Schema(
         role: [
             {
               type: mongoose.Schema.Types.ObjectId,
-              ref: 'Role'
+              ref: 'Role',
+              unique: true,
             }
-          ],    
+          ], 
+          
+        //   roles: [
+        //     {
+        //       type: roleSchema,
+        //     }
+        //   ], 
     },
     {
         timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },

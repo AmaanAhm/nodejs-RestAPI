@@ -1,5 +1,5 @@
 const { body } = require('express-validator');
-const User = require('../models/UserModel');
+const User = require('../models/userModel');
 
 const isEmailAlreadyRegistered = async (email, role) => {
   const userByEmail = await User.findOne({ email });
@@ -31,7 +31,7 @@ const registerValidator = () => {
     body('last_name').notEmpty().withMessage('please provide a last name'),
     body('password').notEmpty().withMessage('please provide password'),
     body('phone_number').notEmpty().withMessage('please provide phone number'),
-    body('role').notEmpty().withMessage('please provide role')
+
   ]
 };
 

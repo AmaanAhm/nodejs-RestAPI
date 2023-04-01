@@ -1,4 +1,5 @@
-const User = require('../models/UserModel');
+const Role = require('../models/roleModel');
+const User = require('../models/userModel');
 const bcrypt = require('bcrypt');
 
 
@@ -6,10 +7,11 @@ const register = async (request, response) => {
 
     try {
         // Request body is valid, continue with registration process
-        const { first_name, last_name, email, phone_number, password, role_id } = request.body;
-
+        const { first_name, last_name, email, phone_number, password } = request.body;
+        // const roleTitle = 'Admin'
+        const roleId = await Role.findOne({ title: 'Admin' });
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new User({ first_name, last_name, email, phone_number, password: hashedPassword, role: role_id });
+        const newUser = new User({ first_name, last_name, email, phone_number, password: hashedPassword, role: roleId });
         const savedUser = await newUser.save();
 
         response.status(201).json({

@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
-const connectDb = require('../core/db_conn');
 const roleSchema = require('../schema/roleSchema');
 
-connectDb();
 
-const titles = ['Super Admin', 'Admin'];
+require('dotenv').config();
+require('../core/db_conn').connect();
+const titles = ['Super Admin', 'Admin', 'Guest'];
 const Role = mongoose.model('Role', roleSchema);
 
 async function seed() {

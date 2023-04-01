@@ -7,8 +7,9 @@ const register = async (request, response) => {
     try {
         // Request body is valid, continue with registration process
         const { first_name, last_name, email, phone_number, password, role_id } = request.body;
+
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new User({ first_name, last_name, email, phone_number, password: hashedPassword, role_id });
+        const newUser = new User({ first_name, last_name, email, phone_number, password: hashedPassword, role: role_id });
         const savedUser = await newUser.save();
 
         response.status(201).json({
@@ -46,4 +47,4 @@ const updateUser = async (request, response) => {
     }
 };
 
-module.exports = { register, updateUser, editRole_id };
+module.exports = { register, updateUser };

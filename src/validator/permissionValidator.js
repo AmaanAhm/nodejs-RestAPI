@@ -4,7 +4,7 @@ const Permission = require('../models/permissionModel');
 const isTitleAlreadyRegistered = async (title) => {
     const user = await Permission.findOne({ title });
     if (user) {
-        return Promise.reject('Email is already registered');
+        return Promise.reject('Title is already registered');
     }
 };
 

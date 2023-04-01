@@ -5,7 +5,7 @@ const registerRoute = require('./register');
 const roleRoute = require('./roleRoute');
 const loginRoute = require('./loginRoute');
 const permissionRoute = require('./permissionRoute')
-const userRoute = require('./userRoute')
+const userRoute  = require('./userRoute')
 
 // Define route prefix for each route module
 router.use('/api', registerRoute);

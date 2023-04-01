@@ -9,12 +9,13 @@ const registerValidator = require('../validator/registerValidator');
   router.post('/register', registerValidator(), (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      const errorMsgs = errors.array().map(error => error.msg);
+    return res.status(422).json({ errors: errorMsgs });
     }
     registerController.register(req, res, next);
   });
 
   router.put('/updateUser/:id',registerController.updateUser);
-  router.put('/editRole_id/:id', registerController.editRole_id);  
+  // router.put('/editRole_id/:id', registerController.editRoid);  
   module.exports = router;
   

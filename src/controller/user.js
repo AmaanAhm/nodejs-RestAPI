@@ -20,7 +20,7 @@ const updateRoleId = async (req, res) => {
     }
 };
 
-module.exports = { updateRoleId };
+module.exports =  {updateRoleId} ;
 
 // snake case: update_role_id
 // kebab case: update-role-id

@@ -59,10 +59,3 @@ This project includes the following dev dependencies:
 - `eslint-plugin-vue`: ESLint plugin for Vue.js code.
 - `prettier`: Format code.
 
-## Contributing
-
-If you would like to contribute to this project, please [contact the author or include information on how to contribute].
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
